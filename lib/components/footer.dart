@@ -72,6 +72,7 @@ class MobileFooter extends StatelessWidget {
         children: <Widget>[
           const Text(
             'All Right Reserved',
+            textAlign: TextAlign.center,
             style: TextStyle(fontSize: 10, color: kTextColor),
           ),
           Row(

@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 
-class SummaryPage extends StatelessWidget {
-  const SummaryPage({
+class SummarySection extends StatelessWidget {
+  const SummarySection({
     Key? key,
   }) : super(key: key);
 
@@ -15,7 +15,7 @@ class SummaryPage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Container(
-        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+        margin: EdgeInsets.symmetric(vertical: 20, horizontal: isDesktop(context) ? horizontalMargin : mobileHorizontalMargin),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -31,7 +31,7 @@ class SummaryPage extends StatelessWidget {
                 children: <Widget>[
                   if (isMobile(context))
                     Image.asset(
-                      'assets/images/summary.jpg',
+                      'assets/images/summary.png',
                       height: size.height * 0.3,
                     ),
                   RichText(
@@ -85,7 +85,7 @@ class SummaryPage extends StatelessWidget {
             if (isDesktop(context) || isTab(context))
               Expanded(
                   child: Image.asset(
-                'assets/images/summary.jpg',
+                'assets/images/summary.png',
                 height: size.height * 0.7,
               ))
           ],

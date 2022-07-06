@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pointdraw/components/footer.dart';
 import 'package:pointdraw/components/header.dart';
+import 'package:pointdraw/components/projects_section.dart';
 import 'package:pointdraw/components/side_menu.dart';
 
-import '../../components/summary_page.dart';
+import '../../components/advantage_section.dart';
+import '../../components/summary_section.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -23,7 +27,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const <Widget>[Header(), SummaryPage(), Footer()],
+              children: const <Widget>[Header(), SummarySection(), AdvantageSection(), ProjectsSection(), Footer()],
             ),
           ),
         ),

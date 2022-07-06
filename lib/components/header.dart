@@ -17,14 +17,14 @@ class Header extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Image.asset(
-            'assets/images/point-draw-icon.png',
-            width: 50,
+            'assets/images/point-draw-logo.png',
+            width: 120,
           ),
-          const SizedBox(width: 10),
-          Text(
-            appTitle,
-            style: GoogleFonts.indieFlower(fontSize: 18, color: kTextColor),
-          ),
+          // const SizedBox(width: 10),
+          // Text(
+          //   appTitle,
+          //   style: GoogleFonts.indieFlower(fontSize: 18, color: kTextColor),
+          // ),
           const Spacer(),
           if (!isMobile(context))
             Row(
