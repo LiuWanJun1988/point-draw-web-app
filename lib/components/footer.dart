@@ -24,35 +24,36 @@ class DesktopFooter extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Row(
-        children: <Widget>[
-          const Expanded(
+        children: const <Widget>[
+          Expanded(
               flex: 1,
               child: Text(
-                'All Right Reserved',
+                '© 2022 PointDraw. All Rights Reserved.\ninitkopico.com',
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 10, color: kTextColor),
               )),
-          Expanded(
-              flex: 2,
-              child: Row(
-                children: <Widget>[
-                  NavItem(
-                    title: 'Twitter',
-                    tapEvent: () {},
-                  ),
-                  NavItem(
-                    title: 'Facebook',
-                    tapEvent: () {},
-                  ),
-                  NavItem(
-                    title: 'Linkedin',
-                    tapEvent: () {},
-                  ),
-                  NavItem(
-                    title: 'Instagram',
-                    tapEvent: () {},
-                  ),
-                ],
-              )),
+          // Expanded(
+          //     flex: 2,
+          //     child: Row(
+          //       children: <Widget>[
+          //         NavItem(
+          //           title: 'Twitter',
+          //           tapEvent: () {},
+          //         ),
+          //         NavItem(
+          //           title: 'Facebook',
+          //           tapEvent: () {},
+          //         ),
+          //         NavItem(
+          //           title: 'Linkedin',
+          //           tapEvent: () {},
+          //         ),
+          //         NavItem(
+          //           title: 'Instagram',
+          //           tapEvent: () {},
+          //         ),
+          //       ],
+          //     )),
         ],
       ),
     );
@@ -68,36 +69,43 @@ class MobileFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-      child: Column(
-        children: <Widget>[
-          const Text(
-            'All Right Reserved',
+      child: const Center(
+        child: Text(
+            '© 2022 PointDraw. All Rights Reserved.\ninitkopico.com',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 10, color: kTextColor),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              NavItem(
-                title: 'Twitter',
-                tapEvent: () {},
-              ),
-              NavItem(
-                title: 'Facebook',
-                tapEvent: () {},
-              ),
-              NavItem(
-                title: 'Linkedin',
-                tapEvent: () {},
-              ),
-              NavItem(
-                title: 'Instagram',
-                tapEvent: () {},
-              ),
-            ],
-          )
-        ],
-      ),
+      )
+      // child: Column(
+      //   children: <Widget>[
+      //     const Text(
+      //       '© 2022 PointDraw. All Rights Reserved.\ninitkopico.com',
+      //       textAlign: TextAlign.center,
+      //       style: TextStyle(fontSize: 10, color: kTextColor),
+      //     ),
+      //     Row(
+      //       mainAxisAlignment: MainAxisAlignment.center,
+      //       children: <Widget>[
+      //         NavItem(
+      //           title: 'Twitter',
+      //           tapEvent: () {},
+      //         ),
+      //         NavItem(
+      //           title: 'Facebook',
+      //           tapEvent: () {},
+      //         ),
+      //         NavItem(
+      //           title: 'Linkedin',
+      //           tapEvent: () {},
+      //         ),
+      //         NavItem(
+      //           title: 'Instagram',
+      //           tapEvent: () {},
+      //         ),
+      //       ],
+      //     )
+      //   ],
+      // ),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pointdraw/components/feature3_section.dart';
 import 'package:pointdraw/components/footer.dart';
 import 'package:pointdraw/components/header.dart';
+import 'package:pointdraw/components/how_to_section.dart';
 import 'package:pointdraw/components/projects_section.dart';
 import 'package:pointdraw/components/side_menu.dart';
 
@@ -29,7 +31,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const <Widget>[Header(), SummarySection(), AdvantageSection(), ProjectsSection(), Feature1Section(), Feature2Section(), Footer()],
+              children: const <Widget>[Header(), SummarySection(), AdvantageSection(), ProjectsSection(), Feature1Section(), Feature2Section(), Feature3Section(), HowToSection(), Footer()],
             ),
           ),
         ),
