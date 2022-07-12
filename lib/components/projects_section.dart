@@ -31,7 +31,7 @@ class ProjectsSection extends StatelessWidget {
                 children: <Widget>[
                   if (isMobile(context))
                     Image.asset(
-                      'assets/images/projects.jpg',
+                      'assets/images/3.png',
                       height: size.height * 0.3,
                     ),
                   RichText(
@@ -79,7 +79,7 @@ class ProjectsSection extends StatelessWidget {
             if (isDesktop(context) || isTab(context))
               Expanded(
                   child: Image.asset(
-                'assets/images/projects.jpg',
+                'assets/images/3.png',
                 height: size.height * 0.7,
               ))
           ],

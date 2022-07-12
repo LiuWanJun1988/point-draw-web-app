@@ -5,6 +5,8 @@ import 'package:pointdraw/components/projects_section.dart';
 import 'package:pointdraw/components/side_menu.dart';
 
 import '../../components/advantage_section.dart';
+import '../../components/feature1_section.dart';
+import '../../components/feature2_section.dart';
 import '../../components/summary_section.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -27,7 +29,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const <Widget>[Header(), SummarySection(), AdvantageSection(), ProjectsSection(), Footer()],
+              children: const <Widget>[Header(), SummarySection(), AdvantageSection(), ProjectsSection(), Feature1Section(), Feature2Section(), Footer()],
             ),
           ),
         ),

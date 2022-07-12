@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 
-class SummarySection extends StatelessWidget {
-  const SummarySection({
+class Feature2Section extends StatelessWidget {
+  const Feature2Section({
     Key? key,
   }) : super(key: key);
 
@@ -31,7 +31,7 @@ class SummarySection extends StatelessWidget {
                 children: <Widget>[
                   if (isMobile(context))
                     Image.asset(
-                      'assets/images/2.png',
+                      'assets/images/feature2.png',
                       height: size.height * 0.3,
                     ),
                   RichText(
@@ -40,53 +40,29 @@ class SummarySection extends StatelessWidget {
                           : TextAlign.center,
                       text: TextSpan(children: [
                         TextSpan(
-                            text: 'Welcome To\n',
+                            text: "Fast and professional",
                             style: GoogleFonts.courgette(
-                                fontSize: isDesktop(context) ? 36 : 20,
-                                fontWeight: FontWeight.w800,
-                                color: kTextColor)),
-                        TextSpan(
-                            text: appTitle,
-                            style: GoogleFonts.courgette(
-                                fontSize: isDesktop(context) ? 48 : 32,
+                                fontSize: isDesktop(context) ? 64 : 32,
                                 fontWeight: FontWeight.w800,
                                 color: kPrimaryColor)),
                       ])),
                   const SizedBox(height: 10),
                   Text(
-                    summary,
+                    "Enjoy a familiar interface with a fresh look that works exactly the way you expect it. Invented, tested, and improved by graphic designers, PointDraw provides the ultimate editor experience: faster node workflow, comprehensive graphic tools, professional grid system, smart guides, and snapping options - all integrated into an interface that allows more control over your workspace.",
                     textAlign:
                         isMobile(context) ? TextAlign.center : TextAlign.start,
                     style: TextStyle(
                         fontSize: isDesktop(context) ? 16 : 16,
                         fontWeight: FontWeight.w300, color: kTextColor),
                   ),
-                  const SizedBox(height: 32),
-                  Wrap(
-                    runSpacing: 10,
-                    alignment: WrapAlignment.center,
-                    children: <Widget>[
-                      MainButton(
-                        title: 'GET STARTED',
-                        color: kButtonColor,
-                        tapEvent: () {},
-                      ),
-                      const SizedBox(width: 20),
-                      MainButton(
-                        title: 'Sign Up',
-                        color: kButtonColor,
-                        tapEvent: () {},
-                      )
-                    ],
-                  )
                 ],
               ),
             )),
             if (isDesktop(context) || isTab(context))
               Expanded(
                   child: Image.asset(
-                'assets/images/2.png',
-                height: size.height * 0.7,
+                'assets/images/feature2.png',
+                height: size.height,
               ))
           ],
         ));

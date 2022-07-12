@@ -41,12 +41,12 @@ class AdvantageSection extends StatelessWidget {
             EdgeInsets.symmetric(vertical: 20, horizontal: isDesktop(context) ? horizontalMargin : mobileHorizontalMargin),
         child: Column(
           children: [
-            const Text(
+            Text(
               "Built for striking results",
-              style: TextStyle(
-                  color: kTextColor, fontSize: 36, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
+              style: GoogleFonts.courgette(
+                  fontSize: isDesktop(context) ? 48 : 32,
+                  fontWeight: FontWeight.w800,
+                  color: kPrimaryColor)),
             const SizedBox(
               height: 20,
             ),
