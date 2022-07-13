@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pointdraw/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pointdraw/screens/home/gallery.dart';
+import 'package:pointdraw/screens/home/home.dart';
 
 import '../constants.dart';
 import 'menu_item.dart';
@@ -20,18 +22,20 @@ class Header extends StatelessWidget {
             'assets/images/point-draw-logo.png',
             width: 120,
           ),
-          // const SizedBox(width: 10),
-          // Text(
-          //   appTitle,
-          //   style: GoogleFonts.indieFlower(fontSize: 18, color: kTextColor),
-          // ),
           const Spacer(),
           if (!isMobile(context))
             Row(
               children: [
                 NavItem(
                   title: 'HOME',
-                  tapEvent: () {},
+                  tapEvent: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen(),
+                          settings: const RouteSettings(name: '/home')),
+                    );
+                  },
                 ),
                 NavItem(
                   title: 'TUTORIALS ',
@@ -43,7 +47,14 @@ class Header extends StatelessWidget {
                 ),
                 NavItem(
                   title: 'GALLERY',
-                  tapEvent: () {},
+                  tapEvent: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const GalleryScreen(),
+                          settings: const RouteSettings(name: '/gallery')),
+                    );
+                  },
                 ),
                 NavItem(
                   title: 'LOGIN',
@@ -57,7 +68,10 @@ class Header extends StatelessWidget {
             ),
           if (isMobile(context))
             IconButton(
-                icon: const Icon(Icons.menu, color: kTextColor,),
+                icon: const Icon(
+                  Icons.menu,
+                  color: kTextColor,
+                ),
                 onPressed: () {
                   Scaffold.of(context).openEndDrawer();
                 })
