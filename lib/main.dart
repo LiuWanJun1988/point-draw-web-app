@@ -1,9 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pointdraw/constants.dart';
 import 'package:pointdraw/screens/home/home.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    name: "point-draw-web-app",
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   runApp(const PointDrawApp());
 }
 
@@ -19,7 +25,8 @@ class PointDrawApp extends StatelessWidget {
       theme: ThemeData(
           scaffoldBackgroundColor: backgroundColor,
           primaryColor: kPrimaryColor,
-          textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)),
+          textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme.apply(bodyColor: Colors.white,
+            displayColor: Colors.white,))),
       home: HomeScreen(),
     );
   }

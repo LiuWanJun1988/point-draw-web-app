@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "318299286189",
+    "firebase_url": "https://point-draw-web-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "point-draw-web-app",
+    "storage_bucket": "point-draw-web-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318299286189:android:8cb341de61f4855e473424",
+        "android_client_info": {
+          "package_name": "com.kopico.pointdraw"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "318299286189-522d6mll76u6um7gdbmcdg5dupqkp1s3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM2PeETuIjGdE31-eOwT10ULtHcsZLd44"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "318299286189-522d6mll76u6um7gdbmcdg5dupqkp1s3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

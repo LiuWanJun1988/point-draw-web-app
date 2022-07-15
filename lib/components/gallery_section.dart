@@ -1,14 +1,54 @@
-import 'package:flutter/material.dart';
-import 'package:pointdraw/responsive.dart';
+import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:pointdraw/core/gallery_image_item.dart';
+import 'package:pointdraw/responsive.dart';
+import 'package:firebase_database/firebase_database.dart';
 import '../constants.dart';
 
-class GallerySection extends StatelessWidget {
-  const GallerySection({
-    Key? key,
-  }) : super(key: key);
+class GallerySection extends StatefulWidget {
+  const GallerySection({Key? key}) : super(key: key);
 
-  Widget imageCard(String imageUrl, BuildContext context) {
+  @override
+  State<StatefulWidget> createState() => _GallerySectionWidgetState();
+}
+
+class _GallerySectionWidgetState extends State<GallerySection> {
+  FirebaseApp secondaryApp = Firebase.app('point-draw-web-app');
+  late FirebaseDatabase database;
+  List<GalleryImageItem>? allGalleryImages, galleryImages;
+  TextEditingController searchController = TextEditingController();
+  Size? size;
+
+  @override
+  initState() {
+    super.initState();
+    readGalleryData();
+  }
+
+  void readGalleryData() {
+    database = FirebaseDatabase.instanceFor(app: secondaryApp);
+    DatabaseReference ref = database.ref('/gallery_images');
+
+    ref.onValue.listen((DatabaseEvent event) {
+      dynamic decoded = event.snapshot.value;
+      allGalleryImages = List<GalleryImageItem>.from(
+          decoded.map((model) => GalleryImageItem.fromJson(model)));
+      galleryImages = [];
+      for (var element in allGalleryImages!) {
+        if (element.search(searchController.text)) {
+          galleryImages?.add(element);
+        }
+      }
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  Widget imageCard(GalleryImageItem imageItem, BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -16,27 +56,32 @@ class GallerySection extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.image_sharp, color: backgroundColor),
             title: Text(
-              'Gallery Image',
+              imageItem.title!,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(color: backgroundColor),
             ),
             subtitle: Text(
-              'Secondary Text',
+              imageItem.description!,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(color: Colors.black.withOpacity(0.6)),
             ),
           ),
-          Image.network(
-            imageUrl,
-            loadingBuilder: _loader,
-            errorBuilder: _error,
-            fit: BoxFit.fitWidth,
+          SizedBox(
+            width: 300,
+            height: 300,
+            child: Image.network(
+              imageItem.url!,
+              loadingBuilder: _loader,
+              errorBuilder: _error,
+              fit: BoxFit.cover,
+            ),
           ),
           ButtonBar(
             alignment: MainAxisAlignment.spaceEvenly,
             children: [
               TextButton(
                 onPressed: () {
-                  // Perform some action
+                  showImageDialog(imageItem);
                 },
                 child: Text('View', style: TextStyle(color: backgroundColor)),
               ),
@@ -54,25 +99,133 @@ class GallerySection extends StatelessWidget {
     );
   }
 
+  Future<void> showImageDialog(GalleryImageItem imageItem) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return imageDialog(imageItem, context);
+      },
+    );
+  }
+
+  Widget imageDialog(GalleryImageItem imageItem, BuildContext context) {
+    return Dialog(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        child: SizedBox(
+          width: 500,
+          height: 500,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      imageItem.title!,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: const Icon(Icons.close_rounded),
+                      color: Colors.blue,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 400,
+                height: 400,
+                child: Image.network(
+                  imageItem.url!,
+                  fit: BoxFit.cover,
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    size = MediaQuery.of(context).size;
+    double horizontalPadding =
+        isDesktop(context) ? horizontalMargin : mobileHorizontalMargin;
+    int axisCount = isMobile(context) ? 1 : (isTab(context) ? 4 : 5);
+    double cardWidth = ((size?.width)! - horizontalPadding * 2) / axisCount;
+    double aspectRatio = cardWidth / (300 + 120);
     return Container(
-        width: size.width,
-        height: size.height,
-        margin: EdgeInsets.symmetric(
-            vertical: 20,
-            horizontal: isDesktop(context)
-                ? horizontalMargin
-                : mobileHorizontalMargin / 2),
-        child: GridView.builder(
-            itemCount: 250,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount:
-                    isMobile(context) ? 1 : (isTab(context) ? 4 : 5),
-                childAspectRatio: 0.9),
-            itemBuilder: (BuildContext context, int index) => imageCard(
-                'https://loremflickr.com/200/200/music?lock=$index', context)));
+        width: (size?.width)!,
+        height: (size?.height)!,
+        margin:
+            EdgeInsets.symmetric(vertical: 20, horizontal: horizontalPadding),
+        child: galleryImages == null
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                children: [
+                  SizedBox(
+                      width: isMobile(context) || isTab(context)
+                          ? double.infinity
+                          : (size?.width)! * 0.3,
+                      child: TextFormField(
+                        onEditingComplete: () {
+                          setState(() {
+                            galleryImages = [];
+                            for (var element in allGalleryImages!) {
+                              if (element.search(searchController.text)) {
+                                galleryImages?.add(element);
+                              }
+                            }
+                          });
+                        },
+                        controller: searchController,
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                          hintText: 'Search',
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          contentPadding:
+                              const EdgeInsets.symmetric(vertical: 10),
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            color: Colors.grey,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
+                              width: 2.0,
+                            ),
+                          ),
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                      child: GridView.builder(
+                          itemCount: galleryImages?.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: axisCount,
+                                  childAspectRatio: aspectRatio),
+                          itemBuilder: (BuildContext context, int index) =>
+                              imageCard(galleryImages![index], context)))
+                ],
+              ));
   }
 
   Widget _loader(
@@ -80,6 +233,7 @@ class GallerySection extends StatelessWidget {
     if (loadingProgress == null) return child;
     return Center(
       child: CircularProgressIndicator(
+        color: Colors.blue,
         value: loadingProgress.expectedTotalBytes != null
             ? loadingProgress.cumulativeBytesLoaded /
                 loadingProgress.expectedTotalBytes!
