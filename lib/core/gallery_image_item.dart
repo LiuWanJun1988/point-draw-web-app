@@ -2,28 +2,42 @@ import 'package:flutter/material.dart';
 
 class Author {
   String? email, username;
+
+  Author.fromJson(dynamic data) {
+    email = data["email"];
+    username = data["username"];
+  }
+  Map<String, Object?> toJson() {
+    return {
+      'email': email,
+      'username': username
+    };
+  }
 }
 
 class GalleryImageItem {
-  GalleryImageItem() {
-    author = Author();
-    tags = [];
-  }
-
   String? url, title, description, category;
   List<dynamic>? tags;
   Author? author;
 
-  static GalleryImageItem fromJson(dynamic data) {
-    GalleryImageItem imageItem = GalleryImageItem();
-    imageItem.url = data["url"];
-    imageItem.title = data["title"];
-    imageItem.description = data["description"];
-    imageItem.category = data["category"];
-    imageItem.tags = data["tags"];
-    imageItem.author?.email = data["author"]["email"];
-    imageItem.author?.username = data["author"]["username"];
-    return imageItem;
+  GalleryImageItem.fromJson(dynamic data) {
+    url = data["url"];
+    title = data["title"];
+    description = data["description"];
+    category = data["category"];
+    tags = data["tags"];
+    author = Author.fromJson(data["author"]);
+  }
+
+  Map<String, Object?> toJson() {
+    return {
+      'title': title,
+      'description': description,
+      'category': category,
+      'tags': tags,
+      'author': author?.toJson(),
+      'url': url,
+    };
   }
 
   bool search(String? data) {

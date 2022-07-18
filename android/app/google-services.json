@@ -30,6 +30,13 @@
             {
               "client_id": "318299286189-522d6mll76u6um7gdbmcdg5dupqkp1s3.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "318299286189-b447fandeh0826g08vghpidhfei7k2ke.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kopico.pointdraw"
+              }
             }
           ]
         }

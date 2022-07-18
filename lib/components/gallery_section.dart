@@ -1,11 +1,9 @@
-import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:pointdraw/core/gallery_image_item.dart';
 import 'package:pointdraw/responsive.dart';
-import 'package:firebase_database/firebase_database.dart';
 import '../constants.dart';
 
 class GallerySection extends StatefulWidget {
@@ -17,7 +15,8 @@ class GallerySection extends StatefulWidget {
 
 class _GallerySectionWidgetState extends State<GallerySection> {
   FirebaseApp secondaryApp = Firebase.app('point-draw-web-app');
-  late FirebaseDatabase database;
+  late FirebaseFirestore fireStore;
+  late final CollectionReference fireStoreRef;
   List<GalleryImageItem>? allGalleryImages, galleryImages;
   TextEditingController searchController = TextEditingController();
   Size? size;
@@ -25,23 +24,26 @@ class _GallerySectionWidgetState extends State<GallerySection> {
   @override
   initState() {
     super.initState();
-    readGalleryData();
+
+    fireStore = FirebaseFirestore.instanceFor(app: secondaryApp);
+    fireStoreRef =
+        fireStore.collection('gallery').withConverter<GalleryImageItem>(
+              fromFirestore: (snapshots, _) =>
+                  GalleryImageItem.fromJson(snapshots.data()!),
+              toFirestore: (galleryImageItem, _) => galleryImageItem.toJson(),
+            );
+
+    readGalleryData(null);
   }
 
-  void readGalleryData() {
-    database = FirebaseDatabase.instanceFor(app: secondaryApp);
-    DatabaseReference ref = database.ref('/gallery_images');
-
-    ref.onValue.listen((DatabaseEvent event) {
-      dynamic decoded = event.snapshot.value;
-      allGalleryImages = List<GalleryImageItem>.from(
-          decoded.map((model) => GalleryImageItem.fromJson(model)));
-      galleryImages = [];
-      for (var element in allGalleryImages!) {
-        if (element.search(searchController.text)) {
-          galleryImages?.add(element);
-        }
+  void readGalleryData(String? search) {
+    galleryImages = [];
+    if (search != null && search.isEmpty) search = null;
+    fireStoreRef.where('tags', arrayContains: search).get().then((QuerySnapshot querySnapshot) {
+      for (var doc in querySnapshot.docs) {
+        galleryImages?.add(GalleryImageItem.fromJson(doc));
       }
+
       if (mounted) {
         setState(() {});
       }
@@ -178,12 +180,13 @@ class _GallerySectionWidgetState extends State<GallerySection> {
                       child: TextFormField(
                         onEditingComplete: () {
                           setState(() {
-                            galleryImages = [];
-                            for (var element in allGalleryImages!) {
-                              if (element.search(searchController.text)) {
-                                galleryImages?.add(element);
-                              }
-                            }
+                            // galleryImages = [];
+                            // for (var element in allGalleryImages!) {
+                            //   if (element.search(searchController.text)) {
+                            //     galleryImages?.add(element);
+                            //   }
+                            // }
+                            readGalleryData(searchController.text);
                           });
                         },
                         controller: searchController,
