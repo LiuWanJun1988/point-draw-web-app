@@ -199,7 +199,7 @@ abstract class PointDrawObject extends PointDrawStateNotifier{
     }
   }
 
-  SVGPointDrawElement toSVGElement(String filename, Map<String, dynamic> attributes);
+  SVGPointDrawElement toSVGElement(String id, Map<String, dynamic> attributes);
 
   void initialize(Offset firstPoint, Offset secondPoint);
 
@@ -621,7 +621,7 @@ class FreeDraw extends  PointDrawPath{
   }
 
   @override
-  SVGPointDrawElement toSVGElement(String filename, Map<String, dynamic> attributes){
+  SVGPointDrawElement toSVGElement(String id, Map<String, dynamic> attributes){
     // TODO:
     return SVGPointDrawElement();
   }
@@ -957,7 +957,7 @@ class PointDrawDirectedLine extends PointDrawPath{
   PointDrawDirectedLine.from(PointDrawDirectedLine object, {required ObjectKey key, Offset displacement = const Offset(5, 5)}) : super.from(object, displacement: displacement, mode: EditingMode.directedLine, key: key);
 
   @override
-  SVGPointDrawElement toSVGElement(String filename, Map<String, dynamic> attributes){
+  SVGPointDrawElement toSVGElement(String id, Map<String, dynamic> attributes){
     // TODO:
     return SVGPointDrawElement();
   }
@@ -1062,7 +1062,7 @@ class PointDrawCurvedDirectedLine extends PointDrawPath{
   PointDrawCurvedDirectedLine.from(PointDrawCurvedDirectedLine object, {Offset displacement = const Offset(5, 5), required ObjectKey key}) : super.from(object, displacement: displacement, mode: EditingMode.curvedDirectedLine, key: key);
 
   @override
-  SVGPointDrawElement toSVGElement(String filename, Map<String, dynamic> attributes){
+  SVGPointDrawElement toSVGElement(String id, Map<String, dynamic> attributes){
     // TODO:
     return SVGPointDrawElement();
   }
@@ -1188,7 +1188,7 @@ class PointDrawGroup extends PointDrawPath{
   }
 
   @override
-  SVGPointDrawElement toSVGElement(String filename, Map<String, dynamic> attributes){
+  SVGPointDrawElement toSVGElement(String id, Map<String, dynamic> attributes){
     // TODO:
     return SVGPointDrawElement();
   }
@@ -1632,7 +1632,7 @@ class PointDrawText extends PointDrawObject {
   }
 
   @override
-  SVGPointDrawElement toSVGElement(String filename, Map<String, dynamic> attributes){
+  SVGPointDrawElement toSVGElement(String id, Map<String, dynamic> attributes){
     // TODO:
     return SVGPointDrawElement();
   }
@@ -2080,7 +2080,7 @@ class PointDrawPathOp extends PointDrawPath{
   }
 
   @override
-  SVGPointDrawElement toSVGElement(String filename, Map<String, dynamic> attributes){
+  SVGPointDrawElement toSVGElement(String id, Map<String, dynamic> attributes){
     // TODO:
     return SVGPointDrawElement();
   }
