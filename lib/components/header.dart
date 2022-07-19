@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:pointdraw/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,6 +27,18 @@ class Header extends StatelessWidget {
           if (!isMobile(context))
             Row(
               children: [
+                if(!kReleaseMode)
+                  NavItem(
+                    title: 'Point draw renderer',
+                    tapEvent: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                            pageBuilder: (context, _, __) => PointDrawRenderScreen(),
+                        ),
+                      );
+                    },
+                  ),
                 NavItem(
                   title: 'HOME',
                   tapEvent: () {
