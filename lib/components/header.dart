@@ -4,6 +4,7 @@ import 'package:pointdraw/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pointdraw/screens/home/gallery.dart';
 import 'package:pointdraw/screens/home/home.dart';
+import 'package:pointdraw/point_draw_models/svg/point_draw_render_screen.dart';
 
 import '../constants.dart';
 import 'menu_item.dart';
