@@ -2,8 +2,6 @@ import 'package:pointdraw/point_draw_models/point_draw_objects.dart';
 
 import 'dart:html';
 
-import 'package:pointdraw/point_draw_models/point_draw_collection.dart';
-
 class SVGBuilder {
 
   final double version = 1.0;
@@ -26,10 +24,10 @@ class SVGBuilder {
     // TODO:
   }
 
-  static PointDrawCollection toPointDraw(){
-    // TODO:
-    return PointDrawCollection();
-  }
+//   static PointDrawCollection toPointDraw(){
+//     // TODO:
+//     return PointDrawCollection();
+//   }
 }
 
 class SVGPointDrawElement{
