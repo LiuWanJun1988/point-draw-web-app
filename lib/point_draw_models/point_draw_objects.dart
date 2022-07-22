@@ -19,6 +19,17 @@ import 'package:pointdraw/point_draw_models/animation_parameters.dart';
 import 'package:pointdraw/point_draw_models/svg/svg_builder.dart';
 import 'package:pointdraw/point_draw_models/effects_parameters.dart';
 
+import 'package:pointdraw/point_draw_models/point_draw_one_dimensional.dart';
+import 'package:pointdraw/point_draw_models/point_draw_two_dimensional.dart';
+import 'package:pointdraw/point_draw_models/point_draw_collection.dart';
+import 'package:pointdraw/point_draw_models/point_draw_composite_path.dart';
+import 'package:pointdraw/point_draw_models/point_draw_picture.dart';
+
+export 'package:pointdraw/point_draw_models/point_draw_one_dimensional.dart';
+export 'package:pointdraw/point_draw_models/point_draw_two_dimensional.dart';
+export 'package:pointdraw/point_draw_models/point_draw_collection.dart';
+export 'package:pointdraw/point_draw_models/point_draw_composite_path.dart';
+export 'package:pointdraw/point_draw_models/point_draw_picture.dart';
 
 Paint fillPaint = Paint()
   ..color = Colors.black
