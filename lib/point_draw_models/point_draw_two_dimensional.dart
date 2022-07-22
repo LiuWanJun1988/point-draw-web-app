@@ -127,7 +127,7 @@ abstract class PointDrawTwoDimensional extends PointDrawPath {
   }
 }
 
-abstract class PointDrawStraightEdgedShape extends PointDrawPath {
+abstract class PointDrawStraightEdgedShape extends PointDrawTwoDimensional {
 
   bool roundCorners = false;
 
