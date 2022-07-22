@@ -15,17 +15,17 @@ enum EditingMode{
   oneDimensional, twoDimensional, bezier, shape, path, object, pathOp,
 }
 
-enum ImageFormat{
-  png, jpg, bmp, gif
+enum OutputFormat{
+  png, jpg, bmp, gif, svg
 }
 
-ImageByteFormat toImageByteFormat(ImageFormat format){
+ImageByteFormat toImageByteFormat(OutputFormat format){
   switch(format){
-    case ImageFormat.png:
+    case OutputFormat.png:
       return ImageByteFormat.png;
-    case ImageFormat.bmp:
-    case ImageFormat.gif:
-    case ImageFormat.jpg:
+    case OutputFormat.bmp:
+    case OutputFormat.gif:
+    case OutputFormat.jpg:
     default:
       return ImageByteFormat.rawRgba;
   }
