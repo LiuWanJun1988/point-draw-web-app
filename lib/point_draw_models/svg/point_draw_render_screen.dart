@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'dart:ui' as ui;
+import 'dart:typed_data';
+import 'dart:js' as js;
+
 import 'package:pointdraw/point_draw_models/app_components/action_button.dart';
 import 'package:pointdraw/point_draw_models/app_components/property_controller.dart';
 import 'package:pointdraw/point_draw_models/grid_parameters.dart';
@@ -31,13 +35,14 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
 
   PointDrawObject? pointDrawObject;
 
+  ui.Picture? picture;
+
   TextEditingController xController = TextEditingController();
   TextEditingController yController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     EditingMode? currentMode = pointDrawObject?.mode;
-    debugPrint("object: $pointDrawObject");
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -150,28 +155,40 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 NewLineActionButton(stateControl: currentMode == EditingMode.line, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawLine(key: ObjectKey("Arc: "+ generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.line, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawLine(key: ObjectKey("Line: "+ generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                                 NewArcActionButton(stateControl: currentMode == EditingMode.arc, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawArc(key: ObjectKey("Arc: "+ generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.arc, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawArc(key: ObjectKey("Arc: "+ generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                                 NewSplineCurveActionButton(stateControl: currentMode == EditingMode.splineCurve, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawSplineCurve(key: ObjectKey("SplineCurve: " + generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.splineCurve, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawSplineCurve(key: ObjectKey("SplineCurve: " + generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                                 NewQuadraticBezierActionButton(stateControl: currentMode == EditingMode.quadraticBezier, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawQuadraticBezier(key: ObjectKey("QuadraticBezier: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.quadraticBezier, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawQuadraticBezier(key: ObjectKey("QuadraticBezier: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                                 NewCubicBezierActionButton(stateControl: currentMode == EditingMode.cubicBezier, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawCubicBezier(key: ObjectKey("CubicBezier: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.cubicBezier, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawCubicBezier(key: ObjectKey("CubicBezier: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                                 NewCompositeActionButton(stateControl: currentMode == EditingMode.compositePath, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawComposite(key: ObjectKey("Composite: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.compositePath, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawComposite(key: ObjectKey("Composite: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                               ],
                             ),
@@ -180,8 +197,10 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 NewLoopActionButton(stateControl: currentMode == EditingMode.loop, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawLoop(key: ObjectKey("Loop: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.loop, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawLoop(key: ObjectKey("Loop: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                               ],
                             ),
@@ -199,28 +218,40 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 NewTriangleActionButton(stateControl: currentMode == EditingMode.triangle, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawPolygon(sides: 3, mode: EditingMode.triangle, key: ObjectKey("Triangle: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.triangle, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawPolygon(sides: 3, mode: EditingMode.triangle, key: ObjectKey("Triangle: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                                 NewRectangleActionButton(stateControl: currentMode == EditingMode.rectangle, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawPolygon(sides: 4, mode: EditingMode.rectangle, key: ObjectKey("Rectangle: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.rectangle, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawPolygon(sides: 4, mode: EditingMode.rectangle, key: ObjectKey("Rectangle: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                                 NewRoundedRectangleActionButton(stateControl: currentMode == EditingMode.roundedRectangle, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawRoundedRectangle(key: ObjectKey("RoundedRectangle: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.roundedRectangle, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawRoundedRectangle(key: ObjectKey("RoundedRectangle: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                                 NewPentagonActionButton(stateControl: currentMode == EditingMode.pentagon, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawPolygon(sides: 5, mode: EditingMode.pentagon, key: ObjectKey("Pentagon: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.pentagon, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawPolygon(sides: 5, mode: EditingMode.pentagon, key: ObjectKey("Pentagon: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                                 NewPolygonActionButton(stateControl: currentMode == EditingMode.polygon, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawPolygon(key: ObjectKey("Polygon: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.polygon, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawPolygon(key: ObjectKey("Polygon: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                                 NewConicActionButton(stateControl: currentMode == EditingMode.conic, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawConic(key: ObjectKey("Conic: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.conic, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawConic(key: ObjectKey("Conic: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                               ],
                             ),
@@ -229,24 +260,34 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 NewStarActionButton(stateControl: currentMode == EditingMode.star, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawStar(key: ObjectKey("Star: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.star, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawStar(key: ObjectKey("Star: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                                 NewHeartActionButton(stateControl: currentMode == EditingMode.heart, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawHeart(key: ObjectKey("Heart: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.heart, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawHeart(key: ObjectKey("Heart: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                                 NewArrowActionButton(stateControl: currentMode == EditingMode.arrow, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawArrow(key: ObjectKey("Arrow: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.arrow, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawArrow(key: ObjectKey("Arrow: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                                 NewLeafActionButton(stateControl: currentMode == EditingMode.leaf, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawLeaf(key: ObjectKey("Leaf: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.leaf, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawLeaf(key: ObjectKey("Leaf: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                                 NewBlobActionButton(stateControl: currentMode == EditingMode.blob, onPressed: (){
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawBlob(key: ObjectKey("Blob: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.blob, index);
+                                  setState((){
+                                    pointDrawObject = PointDrawBlob(key: ObjectKey("Blob: "+generateAutoID()));
+                                    pointDrawObject!.notifyListeners();
+                                  });
                                 }),
                               ],
                             ),
@@ -268,28 +309,15 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                     pointDrawObject = PointDrawDirectedLine(key: ObjectKey("DirectedLine: "+generateAutoID()));
                                     pointDrawObject!.notifyListeners();
                                   });
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawDirectedLine(key: ObjectKey("DirectedLine: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.directedLine, index);
                                 }),
                                 NewCurvedDirectedLineActionButton(stateControl: currentMode == EditingMode.curvedDirectedLine, onPressed: (){
                                   setState((){
                                     pointDrawObject = PointDrawCurvedDirectedLine(key: ObjectKey("CurvedDirectedLine: "+generateAutoID()));
                                     pointDrawObject!.notifyListeners();
                                   });
-                                  // int index = context.read<PointDrawCollection>().addObject(PointDrawCurvedDirectedLine(key: ObjectKey("CurvedDirectedLine: "+generateAutoID())))!;
-                                  // addPointDrawObjectActionSequence(EditingMode.curvedDirectedLine, index);
                                 }),
                               ],
                             ),
-                            // Container(
-                            //   padding: const EdgeInsets.fromLTRB(6, 4, 6, 0),
-                            //   child: const Text("Large Objects", style: TextStyle(fontSize: 14, color: Colors.black),),
-                            // ),
-                            // const Divider(
-                            //   height: 10,
-                            //   thickness: 2.0,
-                            //   indent: 2.0,
-                            // ),
                           ]
                       )
                   ),
@@ -452,17 +480,71 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
             ),
             Container(
               width: 1200,
-              height: height + rendererWindowPadding * 2,
+              height: 300 + rendererWindowPadding * 2,
               decoration: BoxDecoration(
                 border: Border.all(width: 1.0)
               ),
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Text(pointDrawObject?.toSVGElement(pointDrawObject?.key.toString() ?? "",
-                  {}).toString() ?? "No point draw object created", ),
+              child: Builder(
+                builder: (context) {
+                  String? svgString;
+                  try{
+                    svgString = pointDrawObject?.toSVGElement(pointDrawObject?.key.toString() ?? "",
+                        {}).toString();
+                  } catch(e){
+                    svgString = null;
+                  }
+                  return Text(svgString ?? "No point draw object created", );
+                }
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MaterialButton(
+                  onPressed: picture != null ? () async {
+                    await saveToFile(picture!, width.round(), height.round(), format: OutputFormat.svg).catchError((error){
+                      showDialog(
+                        context: context,
+                        builder: (context){
+                          return SimpleDialog(
+                            title: Text("Cannot save to file. Error: $error"),
+                          );
+                        }
+                      );
+                    });
+                  } : null,
+                  color: Colors.grey,
+                  child: const Text("Save as", style: TextStyle(color: Colors.black)),
+                )
+              ],
             )
           ],
         ),
       ),
     );
   }
+
+  Future<void> saveToFile(ui.Picture picture, int width, int height,
+      {OutputFormat format = OutputFormat.png}) async {
+    ui.Image img = await picture.toImage(width, height);
+    ByteData? documentBytes;
+    if(format == OutputFormat.png || format == OutputFormat.bmp){
+      documentBytes = await img.toByteData(format: toImageByteFormat(format));
+    } else if(format == OutputFormat.svg) {
+      var st = pointDrawObject?.toSVGElement(pointDrawObject?.key.value.toString() ?? generateAutoID(),
+          {}).toString().codeUnits;
+      documentBytes = ByteData(st?.length ?? 0);
+    } else {
+      documentBytes = await encodeAs(img, format, width, height);
+    }
+    if(documentBytes != null){
+      var outcome = await js.context.callMethod('saveFile', [documentBytes]);
+    }
+  }
+
+  Future<ByteData?> encodeAs(ui.Image image, OutputFormat format, int width, int height) async {
+    return Uint8List(0).buffer.asByteData();
+  }
+
 }
