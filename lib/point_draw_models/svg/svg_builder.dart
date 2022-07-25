@@ -3,7 +3,6 @@ import 'package:pointdraw/point_draw_models/point_draw_objects.dart';
 import 'dart:html';
 
 class SVGBuilder {
-
   final double version = 1.0;
 
   final String docType = "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd";
@@ -20,7 +19,7 @@ class SVGBuilder {
 
   List<SVGPointDrawElement> canvasElement = [];
 
-  void addSVGElement(PointDrawObject object){
+  void addSVGElement(PointDrawObject object) {
     // TODO:
   }
 
@@ -30,6 +29,12 @@ class SVGBuilder {
 //   }
 }
 
-class SVGPointDrawElement{
-  // TODO:
+class SVGPointDrawElement {
+  const SVGPointDrawElement({required this.svgContent});
+  final String svgContent;
+
+  @override
+  String toString() {
+    return svgContent;
+  }
 }
