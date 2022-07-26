@@ -627,24 +627,25 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 MaterialButton(
-                  onPressed: picture != null
-                      ? () async {
-                          await saveToFile(
-                                  picture!, width.round(), height.round(),
-                                  format: OutputFormat.svg)
-                              .catchError((error) {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return SimpleDialog(
-                                    title: Text(
-                                        "Cannot save to file. Error: $error"),
-                                  );
-                                });
+                  onPressed: () async {
+                    await saveToFile(
+                        width, height,
+                        format: OutputFormat.svg)
+                        .catchError((error) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return SimpleDialog(
+                              title: Text(
+                                  "Cannot save to file. Error: $error", style: TextStyle(color: Colors.black)),
+                            );
                           });
-                        }
-                      : null,
+                    });
+                  },
                   color: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
                   child: const Text("Save as",
                       style: TextStyle(color: Colors.black)),
                 )
@@ -656,24 +657,19 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
     );
   }
 
-  Future<void> saveToFile(ui.Picture picture, int width, int height,
+  Future<void> saveToFile(double width, double height,
       {OutputFormat format = OutputFormat.png}) async {
-    ui.Image img = await picture.toImage(width, height);
     ByteData? documentBytes;
-    if (format == OutputFormat.png || format == OutputFormat.bmp) {
-      documentBytes = await img.toByteData(format: toImageByteFormat(format));
-    } else if (format == OutputFormat.svg) {
-      var st = pointDrawObject
-          ?.toSVGElement(
-              pointDrawObject?.key.value.toString() ?? generateAutoID(), {})
-          .toString()
-          .codeUnits;
-      documentBytes = ByteData(st?.length ?? 0);
-    } else {
-      documentBytes = await encodeAs(img, format, width, height);
-    }
+    if (format == OutputFormat.svg) {
+      if(pointDrawObject != null){
+        widget.builder.addSVGElement(pointDrawObject!, {});
+        documentBytes = widget.builder.toByteData(width.round(), height.round(), Offset.zero & Size(width, height));
+        debugPrint("See svg ... ${documentBytes?.buffer.asUint8List().length}");
+      }
+    } 
     if (documentBytes != null) {
-      var outcome = await js.context.callMethod('saveFile', [documentBytes]);
+      debugPrint("Saving svg ...");
+      var outcome = await js.context.callMethod('saveSVGFile', [documentBytes]);
     }
   }
 
