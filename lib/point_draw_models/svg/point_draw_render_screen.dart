@@ -513,8 +513,9 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                   Offset newCP = Offset(
                                       double.parse(xController.text),
                                       double.parse(yController.text));
-                                  pointDrawObject?.addControlPoint(newCP);
-                                  setState(() {});
+                                  setState(() {
+                                    pointDrawObject?.points.add(newCP);
+                                  });
                                 }
                               },
                               padding:
