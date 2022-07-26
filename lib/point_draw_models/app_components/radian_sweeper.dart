@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'dart:math' show pi;
-
 import 'package:pointdraw/point_draw_models/utilities/fast_draw.dart';
 
 Paint tickPainter = Paint()

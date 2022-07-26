@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart' show DocumentSnapshot;
 import 'dart:math';
 
 import 'package:pointdraw/point_draw_models/point_draw_objects.dart';
+import 'package:pointdraw/point_draw_models/shader_parameters.dart';
 import 'package:pointdraw/point_draw_models/svg/svg_builder.dart';
+import 'package:pointdraw/point_draw_models/utilities/svg_utils.dart';
 import 'package:pointdraw/point_draw_models/utilities/utils.dart';
 import 'package:pointdraw/point_draw_models/utilities/drawing_paths.dart' show getBasicAngle, getClockwiseSweepingDirection;
 import 'package:pointdraw/point_draw_models/keys_and_names.dart';
@@ -447,8 +449,20 @@ class PointDrawPolygon extends PointDrawStraightEdgedShape {
 
   @override
   SVGPointDrawElement toSVGElement(String id, Map<String, dynamic> attributes) {
-    // TODO: implement toSVGElement
-    throw UnimplementedError();
+    debugPrint(fPaint.shader.toString());
+    ShaderParameters? shader = shaderParam;
+    String polygonSVG = "";
+    if (shader != null) {
+      String shaderId = "shader-$id";
+      polygonSVG = shaderParamToString(shader, shaderId);
+      polygonSVG += "\n<polygon points=\"${offsetListToString(points)}\" style=\"${strokePaintToString(sPaint)};fill:url('#$shaderId')\" />";
+    } else {
+      polygonSVG += "<polygon points=\"${offsetListToString(points)}\" style=\"${strokePaintToString(sPaint)};${fillPaintToString(fPaint)}\" />";
+    }
+
+    String svgContent = "<g id=\"$id\">\n$polygonSVG\n</g>";
+    debugPrint(svgContent);
+    return SVGPointDrawElement(svgContent: svgContent);
   }
 }
 

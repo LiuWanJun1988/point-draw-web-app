@@ -6,6 +6,7 @@ import 'dart:html';
 
 import 'package:pointdraw/point_draw_models/utilities/drawing_paths.dart';
 import 'package:pointdraw/point_draw_models/utilities/spline_path.dart';
+import 'package:pointdraw/point_draw_models/utilities/svg_utils.dart';
 import 'package:pointdraw/point_draw_models/utilities/utils.dart';
 import 'package:pointdraw/point_draw_models/utilities/matrices.dart';
 import 'package:pointdraw/point_draw_models/utilities/ui_parameters.dart'
@@ -1250,11 +1251,11 @@ class PointDrawDirectedLine extends PointDrawPath {
       Offset arrowPoint3 =
           pointer + Offset.fromDirection(direction + (4 * pi / 3), 6);
 
-      String viewPort = "<svg height=\"500\" width=\"800\">";
       String lineSVG =
-          "<line x1=\"${points[0].dx}\" y1=\"${points[0].dy}\" x2=\"${points[1].dx}\" y2=\"${points[1].dy}\" style=\"stroke:rgb(${fPaint.color.red},${fPaint.color.green},${fPaint.color.blue});stroke-width:${strokePaint.strokeWidth}\" />";
-      String arrowSVG = "<polygon points=\"${arrowPoint1.dx},${arrowPoint1.dy} ${arrowPoint2.dx},${arrowPoint2.dy} ${arrowPoint3.dx},${arrowPoint3.dy}\" />";
-      String svgContent = "$viewPort\n$lineSVG\n$arrowSVG\n</svg>";
+          "<polygon points=\"${offsetListToString(points)}\" style=\"${strokePaintToString(sPaint)}\" />";
+      String arrowSVG =
+          "<polygon points=\"${offsetToString(arrowPoint1)} ${offsetToString(arrowPoint2)} ${offsetToString(arrowPoint3)}\" style=\"${strokePaintToString(sPaint)} />";
+      String svgContent = "<g id=\"$id\">\n$lineSVG\n$arrowSVG\n</g>";
       print(svgContent);
       return SVGPointDrawElement(svgContent: svgContent);
     }

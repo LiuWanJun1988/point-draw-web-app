@@ -39,6 +39,8 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
   TextEditingController xController = TextEditingController();
   TextEditingController yController = TextEditingController();
 
+  String? svgString;
+
   @override
   Widget build(BuildContext context) {
     EditingMode? currentMode = pointDrawObject?.mode;
@@ -513,9 +515,7 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                   Offset newCP = Offset(
                                       double.parse(xController.text),
                                       double.parse(yController.text));
-                                  setState(() {
-                                    pointDrawObject?.points.add(newCP);
-                                  });
+                                  pointDrawObject?.points.add(newCP);
                                 }
                               },
                               padding:
@@ -598,8 +598,13 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                   Container(
                     alignment: Alignment.centerLeft,
                     height: 30,
-                    child: const Text("SVG Output",
-                        style: TextStyle(color: Colors.black)),
+                    child: TextButton(
+                      onPressed: () {
+                        setState(() {});
+                      },
+                      child: const Text("SVG Output",
+                          style: TextStyle(color: Colors.black))
+                    ),
                   ),
                   Expanded(child: Container()),
                 ],
@@ -611,7 +616,6 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
               decoration: BoxDecoration(border: Border.all(width: 1.0)),
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Builder(builder: (context) {
-                String? svgString;
                 try {
                   svgString = pointDrawObject?.toSVGElement(
                       pointDrawObject?.key.toString() ?? "", {}).toString();

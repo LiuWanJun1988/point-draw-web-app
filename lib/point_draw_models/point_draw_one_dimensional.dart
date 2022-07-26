@@ -6,6 +6,7 @@ import 'dart:ui' show PathMetric;
 
 import 'package:pointdraw/point_draw_models/point_draw_objects.dart';
 import 'package:pointdraw/point_draw_models/svg/svg_builder.dart';
+import 'package:pointdraw/point_draw_models/utilities/svg_utils.dart';
 import 'package:pointdraw/point_draw_models/utilities/utils.dart';
 import 'package:pointdraw/point_draw_models/keys_and_names.dart';
 import 'package:pointdraw/point_draw_models/parametric_objects.dart';
@@ -299,12 +300,10 @@ class PointDrawLine extends PointDrawOneDimensionalObject {
   @override
   SVGPointDrawElement toSVGElement(String id, Map<String, dynamic> attributes) {
     if (points.length >= 2) {
-      String viewPort = "<svg height=\"500\" width=\"800\">";
       String lineSVG =
-          "<line x1=\"${points[0].dx}\" y1=\"${points[0].dy}\" x2=\"${points[1].dx}\" y2=\"${points[1].dy}\" style=\"stroke:rgb(${fPaint.color.red},${fPaint.color.green},${fPaint.color.blue});stroke-width:${strokePaint.strokeWidth}\" />";
-      String svgContent = "$viewPort\n$lineSVG\n</svg>";
-      print(svgContent);
-      return SVGPointDrawElement(svgContent: svgContent);
+          "<g id=\"$id\">\n<polygon points=\"${offsetListToString(points)}\" style=\"${strokePaintToString(sPaint)}\" />\n</g>";
+      print(lineSVG);
+      return SVGPointDrawElement(svgContent: lineSVG);
     }
 
     return const SVGPointDrawElement(svgContent: "Not Enough Control Points");
