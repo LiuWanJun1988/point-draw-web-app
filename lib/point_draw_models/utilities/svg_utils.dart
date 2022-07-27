@@ -13,23 +13,25 @@ String offsetListToString(List<Offset> offsets){
   return offsetsString;
 }
 
-String strokePaintToString(Paint? paint){
+String strokePaintToString(Paint? paint, {Map<String, dynamic>? args}){
   if(paint == null){
     return "stroke:none";
+  }
+  if(args?.containsKey("stroke_cap") ?? false){
+    // TODO: encode stroke caps
   }
   return "stroke:rgb(${paint.color.red},${paint.color.green},${paint.color.blue});stroke-width:${paint.strokeWidth}";
 }
 
-String fillPaintToString(Paint? paint) {
+String fillPaintToString(Paint? paint, {Map<String, dynamic>? args}) {
   if(paint == null){
     return "fill:none";
   }
-
   if (paint.shader == null) {
     return "fill:rgb(${paint.color.red},${paint.color.green},${paint.color.blue})";
+  } else {
+    return "fill:url('#${args!["shader_id"]}')\" />";
   }
-
-  return "";
 }
 
 String colorToRGB(Color? color) {
