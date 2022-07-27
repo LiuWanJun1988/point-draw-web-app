@@ -13,8 +13,8 @@ String offsetListToString(List<Offset> offsets){
   return offsetsString;
 }
 
-String strokePaintToString(Paint? paint, {Map<String, dynamic>? args}){
-  if(paint == null){
+String strokePaintToString(bool outlined, Paint? paint, {Map<String, dynamic>? args}){
+  if(paint == null || !outlined){
     return "stroke:none";
   }
   if(args?.containsKey("stroke_cap") ?? false){
@@ -23,8 +23,8 @@ String strokePaintToString(Paint? paint, {Map<String, dynamic>? args}){
   return "stroke:rgb(${paint.color.red},${paint.color.green},${paint.color.blue});stroke-width:${paint.strokeWidth}";
 }
 
-String fillPaintToString(Paint? paint, {Map<String, dynamic>? args}) {
-  if(paint == null){
+String fillPaintToString(bool filled, Paint? paint, {Map<String, dynamic>? args}) {
+  if(paint == null || !filled){
     return "fill:none";
   }
   if (paint.shader == null) {
