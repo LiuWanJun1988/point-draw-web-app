@@ -1252,9 +1252,9 @@ class PointDrawDirectedLine extends PointDrawPath {
           pointer + Offset.fromDirection(direction + (4 * pi / 3), 6);
 
       String lineSVG =
-          "<polygon points=\"${offsetListToString(points)}\" style=\"${strokePaintToString(sPaint)}\" />";
+          "<polygon points=\"${offsetListToString(points)}\" style=\"${strokePaintToString(outlined, sPaint)}\" />";
       String arrowSVG =
-          "<polygon points=\"${offsetToString(arrowPoint1)} ${offsetToString(arrowPoint2)} ${offsetToString(arrowPoint3)}\" style=\"${strokePaintToString(sPaint)} />";
+          "<polygon points=\"${offsetToString(arrowPoint1)} ${offsetToString(arrowPoint2)} ${offsetToString(arrowPoint3)}\" style=\"${strokePaintToString(outlined, sPaint)} />";
       String svgContent = "<g id=\"$id\">\n$lineSVG\n$arrowSVG\n</g>";
       print(svgContent);
       return SVGPointDrawElement(svgContent: svgContent);

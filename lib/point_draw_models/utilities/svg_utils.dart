@@ -48,7 +48,12 @@ String shaderParamToString(ShaderParameters? shaderParameters, String id) {
     }
     shader += "$linearGradient$stops\n</linearGradient>";
   } else if (shaderParameters?.type == ShaderType.radial) {
-
+    String radialGradient = "<radialGradient id=\"$id\" cx=\"${shaderParameters?.center?.dx}\" cy=\"${shaderParameters?.center?.dy}\" r=\"${shaderParameters?.radius}\" >";
+    String stops = "";
+    for (int i = 0; i < (shaderParameters?.stops.length)!; i ++) {
+      stops += "\n<stop offset=\"${(shaderParameters?.stops[i])! * 100.0}%\" style=\"stop-color:${colorToRGB(shaderParameters?.colors[i])};stop-opacity:${shaderParameters?.colors[i].opacity}\" />";
+    }
+    shader += "$radialGradient$stops\n</radialGradient>";
   } else if (shaderParameters?.type == ShaderType.sweep) {
 
   }

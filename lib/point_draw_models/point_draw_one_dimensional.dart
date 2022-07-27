@@ -301,7 +301,7 @@ class PointDrawLine extends PointDrawOneDimensionalObject {
   SVGPointDrawElement toSVGElement(String id, Map<String, dynamic> attributes) {
     if (points.length >= 2) {
       String lineSVG =
-          "<g id=\"$id\">\n<polygon points=\"${offsetListToString(points)}\" style=\"${strokePaintToString(sPaint)}\" />\n</g>";
+          "<g id=\"$id\">\n<polygon points=\"${offsetListToString(points)}\" style=\"${strokePaintToString(outlined, sPaint)}\" />\n</g>";
       print(lineSVG);
       return SVGPointDrawElement(svgContent: lineSVG);
     }
