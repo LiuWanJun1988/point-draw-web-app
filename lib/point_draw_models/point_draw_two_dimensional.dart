@@ -456,6 +456,7 @@ class PointDrawPolygon extends PointDrawStraightEdgedShape {
     }
     polygonSVG += "<polygon points=\"${offsetListToString(points)}\" style=\"${strokePaintToString(outlined, sPaint)};${fillPaintToString(filled, fPaint, args: attributes)}\" />";
     String svgContent = "<g id=\"$id\">\n$polygonSVG\n</g>";
+    debugPrint(svgContent);
     return SVGPointDrawElement(svgContent: svgContent);
   }
 }

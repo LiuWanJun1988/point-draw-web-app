@@ -1256,7 +1256,7 @@ class PointDrawDirectedLine extends PointDrawPath {
       String arrowSVG =
           "<polygon points=\"${offsetToString(arrowPoint1)} ${offsetToString(arrowPoint2)} ${offsetToString(arrowPoint3)}\" style=\"${strokePaintToString(outlined, sPaint)} />";
       String svgContent = "<g id=\"$id\">\n$lineSVG\n$arrowSVG\n</g>";
-      print(svgContent);
+      debugPrint(svgContent);
       return SVGPointDrawElement(svgContent: svgContent);
     }
 
