@@ -449,19 +449,13 @@ class PointDrawPolygon extends PointDrawStraightEdgedShape {
 
   @override
   SVGPointDrawElement toSVGElement(String id, Map<String, dynamic> attributes) {
-    debugPrint(fPaint.shader.toString());
-    ShaderParameters? shader = shaderParam;
     String polygonSVG = "";
-    if (shader != null) {
-      String shaderId = "shader-$id";
-      polygonSVG = shaderParamToString(shader, shaderId);
-      polygonSVG += "\n<polygon points=\"${offsetListToString(points)}\" style=\"${strokePaintToString(sPaint)};fill:url('#$shaderId')\" />";
-    } else {
-      polygonSVG += "<polygon points=\"${offsetListToString(points)}\" style=\"${strokePaintToString(sPaint)};${fillPaintToString(fPaint)}\" />";
+    if (fPaint.shader != null) {
+      attributes["shader_id"] = "shader-$id";
+      polygonSVG += shaderParamToString(shaderParam, attributes["shader_id"]);
     }
-
+    polygonSVG += "<polygon points=\"${offsetListToString(points)}\" style=\"${strokePaintToString(outlined, sPaint)};${fillPaintToString(filled, fPaint, args: attributes)}\" />";
     String svgContent = "<g id=\"$id\">\n$polygonSVG\n</g>";
-    debugPrint(svgContent);
     return SVGPointDrawElement(svgContent: svgContent);
   }
 }
