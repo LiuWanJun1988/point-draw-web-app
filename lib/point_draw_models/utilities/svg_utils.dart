@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:pointdraw/point_draw_models/point_draw_objects.dart';
 import 'package:pointdraw/point_draw_models/shader_parameters.dart';
 
+bool requireCSS(PointDrawObject object) {
+
+  if (object.shaderType == ShaderType.sweep) {
+    return true;
+  }
+  // TODO: add the other
+  return false;
+}
 String offsetToString(Offset offset) {
   return "${offset.dx},${offset.dy}";
 }
@@ -60,4 +69,12 @@ String shaderParamToString(ShaderParameters? shaderParameters, String id) {
   }
   shader += "\n</defs>";
   return shader;
+}
+
+String rectToString(Rect rect) {
+  return "x=\"${rect.topLeft.dx}\" y=\"${rect.topLeft.dy}\" width=\"${rect.width}\" height=\"${rect.height}\"";
+}
+
+String generateConicString(Offset center, double width, double height) {
+  return "cx=\"${center.dx}\" cy=\"${center.dy}\" rx=\"$width\" ry=\"$height\"";
 }

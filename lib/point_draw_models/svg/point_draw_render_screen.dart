@@ -257,8 +257,8 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                         pointDrawObject = PointDrawPolygon(
                                             sides: 3,
                                             mode: EditingMode.triangle,
-                                            key: ObjectKey("Triangle: " +
-                                                generateAutoID()));
+                                            key: ObjectKey(
+                                                "Triangle: ${generateAutoID()}"));
                                         pointDrawObject!.notifyListeners();
                                       });
                                     }),
@@ -270,8 +270,8 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                         pointDrawObject = PointDrawPolygon(
                                             sides: 4,
                                             mode: EditingMode.rectangle,
-                                            key: ObjectKey("Rectangle: " +
-                                                generateAutoID()));
+                                            key: ObjectKey(
+                                                "Rectangle: ${generateAutoID()}"));
                                         pointDrawObject!.notifyListeners();
                                       });
                                     }),
@@ -280,11 +280,9 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                         EditingMode.roundedRectangle,
                                     onPressed: () {
                                       setState(() {
-                                        pointDrawObject =
-                                            PointDrawRoundedRectangle(
-                                                key: ObjectKey(
-                                                    "RoundedRectangle: " +
-                                                        generateAutoID()));
+                                        pointDrawObject = PointDrawRoundedRectangle(
+                                            key: ObjectKey(
+                                                "RoundedRectangle: ${generateAutoID()}"));
                                         pointDrawObject!.notifyListeners();
                                       });
                                     }),
@@ -296,8 +294,8 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                         pointDrawObject = PointDrawPolygon(
                                             sides: 5,
                                             mode: EditingMode.pentagon,
-                                            key: ObjectKey("Pentagon: " +
-                                                generateAutoID()));
+                                            key: ObjectKey(
+                                                "Pentagon: ${generateAutoID()}"));
                                         pointDrawObject!.notifyListeners();
                                       });
                                     }),
@@ -307,8 +305,8 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                     onPressed: () {
                                       setState(() {
                                         pointDrawObject = PointDrawPolygon(
-                                            key: ObjectKey("Polygon: " +
-                                                generateAutoID()));
+                                            key: ObjectKey(
+                                                "Polygon: ${generateAutoID()}"));
                                         pointDrawObject!.notifyListeners();
                                       });
                                     }),
@@ -319,7 +317,7 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                       setState(() {
                                         pointDrawObject = PointDrawConic(
                                             key: ObjectKey(
-                                                "Conic: " + generateAutoID()));
+                                                "Conic: ${generateAutoID()}"));
                                         pointDrawObject!.notifyListeners();
                                       });
                                     }),
@@ -336,7 +334,7 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                       setState(() {
                                         pointDrawObject = PointDrawStar(
                                             key: ObjectKey(
-                                                "Star: " + generateAutoID()));
+                                                "Star: ${generateAutoID()}"));
                                         pointDrawObject!.notifyListeners();
                                       });
                                     }),
@@ -347,7 +345,7 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                       setState(() {
                                         pointDrawObject = PointDrawHeart(
                                             key: ObjectKey(
-                                                "Heart: " + generateAutoID()));
+                                                "Heart: ${generateAutoID()}"));
                                         pointDrawObject!.notifyListeners();
                                       });
                                     }),
@@ -358,7 +356,7 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                       setState(() {
                                         pointDrawObject = PointDrawArrow(
                                             key: ObjectKey(
-                                                "Arrow: " + generateAutoID()));
+                                                "Arrow: ${generateAutoID()}"));
                                         pointDrawObject!.notifyListeners();
                                       });
                                     }),
@@ -369,7 +367,7 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                       setState(() {
                                         pointDrawObject = PointDrawLeaf(
                                             key: ObjectKey(
-                                                "Leaf: " + generateAutoID()));
+                                                "Leaf: ${generateAutoID()}"));
                                         pointDrawObject!.notifyListeners();
                                       });
                                     }),
@@ -380,7 +378,7 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                       setState(() {
                                         pointDrawObject = PointDrawBlob(
                                             key: ObjectKey(
-                                                "Blob: " + generateAutoID()));
+                                                "Blob: ${generateAutoID()}"));
                                         pointDrawObject!.notifyListeners();
                                       });
                                     }),
@@ -409,7 +407,8 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                     onPressed: () {
                                       setState(() {
                                         pointDrawObject = PointDrawDirectedLine(
-                                            key: ObjectKey("DirectedLine: ${generateAutoID()}"));
+                                            key: ObjectKey(
+                                                "DirectedLine: ${generateAutoID()}"));
                                         pointDrawObject!.notifyListeners();
                                       });
                                     }),
@@ -421,8 +420,7 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                                         pointDrawObject =
                                             PointDrawCurvedDirectedLine(
                                                 key: ObjectKey(
-                                                    "CurvedDirectedLine: " +
-                                                        generateAutoID()));
+                                                    "CurvedDirectedLine: ${generateAutoID()}"));
                                         pointDrawObject!.notifyListeners();
                                       });
                                     }),
@@ -435,7 +433,7 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                 ),
                 Container(
                     width: 300,
-                    constraints: BoxConstraints(minHeight: 400),
+                    constraints: const BoxConstraints(minHeight: 400),
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
                       vertical: 10,
@@ -443,7 +441,7 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Add control points",
                           style: TextStyle(color: Colors.black),
                         ),
@@ -599,12 +597,11 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
                     alignment: Alignment.centerLeft,
                     height: 30,
                     child: TextButton(
-                      onPressed: () {
-                        setState(() {});
-                      },
-                      child: const Text("SVG Output",
-                          style: TextStyle(color: Colors.black))
-                    ),
+                        onPressed: () {
+                          setState(() {});
+                        },
+                        child: const Text("SVG Output",
+                            style: TextStyle(color: Colors.black))),
                   ),
                   Expanded(child: Container()),
                 ],
@@ -633,16 +630,14 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
               children: [
                 MaterialButton(
                   onPressed: () async {
-                    await saveToFile(
-                        width, height,
-                        format: OutputFormat.svg)
+                    await saveToFile(width, height, format: OutputFormat.svg)
                         .catchError((error) {
                       showDialog(
                           context: context,
                           builder: (context) {
                             return SimpleDialog(
-                              title: Text(
-                                  "Cannot save to file. Error: $error", style: TextStyle(color: Colors.black)),
+                              title: Text("Cannot save to file. Error: $error",
+                                  style: const TextStyle(color: Colors.black)),
                             );
                           });
                     });
@@ -666,12 +661,13 @@ class _PointDrawRenderScreenState extends State<PointDrawRenderScreen> {
       {OutputFormat format = OutputFormat.png}) async {
     ByteData? documentBytes;
     if (format == OutputFormat.svg) {
-      if(pointDrawObject != null){
+      if (pointDrawObject != null) {
         widget.builder.addSVGElement(pointDrawObject!, {});
-        documentBytes = widget.builder.toByteData(width.round(), height.round(), Offset.zero & Size(width, height));
+        documentBytes = widget.builder.toByteData(
+            width.round(), height.round(), Offset.zero & Size(width, height));
         debugPrint("See svg ... ${documentBytes?.buffer.asUint8List().length}");
       }
-    } 
+    }
     if (documentBytes != null) {
       debugPrint("Saving svg ...");
       var outcome = await js.context.callMethod('saveSVGFile', [documentBytes]);
