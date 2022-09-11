@@ -1635,21 +1635,7 @@ class PointDrawStar extends PointDrawStraightEdgedShape {
   Path getPath() {
     Path star = Path();
     if (points.length == 2) {
-      List<Offset> vertices = [];
-      double outerRadius = (points.last - points.first).distance;
-      double startAngleOuter = (points.last - points.first).direction;
-      double startAngleInner = startAngleOuter + pi / corners;
-      radius ??= (points.first - points.last).distance *
-          sin(pi / 10) /
-          sin(7 * pi / 10);
-      for (int i = 0; i < corners; i++) {
-        vertices.add(points.first +
-            Offset.fromDirection(
-                startAngleOuter + i * (2 * pi / corners), outerRadius));
-        vertices.add(points.first +
-            Offset.fromDirection(
-                startAngleInner + i * (2 * pi / corners), radius!));
-      }
+      List<Offset> vertices = generateVertices();
       star.addPolygon(vertices, true);
     }
     return star;
@@ -1679,6 +1665,26 @@ class PointDrawStar extends PointDrawStraightEdgedShape {
       animatedStar.addPolygon(vertices, true);
     }
     return animatedStar;
+  }
+
+  List<Offset> generateVertices() {
+    List<Offset> vertices = [];
+    double outerRadius = (points.last - points.first).distance;
+    double startAngleOuter = (points.last - points.first).direction;
+    double startAngleInner = startAngleOuter + pi / corners;
+    radius ??= (points.first - points.last).distance *
+        sin(pi / 10) /
+        sin(7 * pi / 10);
+    for (int i = 0; i < corners; i++) {
+      vertices.add(points.first +
+          Offset.fromDirection(
+              startAngleOuter + i * (2 * pi / corners), outerRadius));
+      vertices.add(points.first +
+          Offset.fromDirection(
+              startAngleInner + i * (2 * pi / corners), radius!));
+    }
+
+    return vertices;
   }
 
   @override
@@ -1749,8 +1755,23 @@ class PointDrawStar extends PointDrawStraightEdgedShape {
 
   @override
   SVGPointDrawElement toSVGElement(String id, Map<String, dynamic> attributes) {
-    // TODO: implement toSVGElement
-    throw UnimplementedError();
+    String polygonSVG = "", svgContent = "";
+    if (requireCSS(this)) {
+      return SVGPointDrawElement(svgContent: svgContent);
+    }
+
+    if (fPaint.shader != null) {
+      attributes["shader_id"] = "shader-$id";
+      polygonSVG += shaderParamToString(shaderParam, attributes["shader_id"]);
+    }
+
+    List<Offset> vertices = generateVertices();
+
+    polygonSVG +=
+    "<polygon points=\"${offsetListToString(vertices)}\" style=\"${strokePaintToString(outlined, sPaint)};${fillPaintToString(filled, fPaint, args: attributes)}\" />";
+    svgContent = "<g id=\"$id\">\n$polygonSVG\n</g>";
+    debugPrint(svgContent);
+    return SVGPointDrawElement(svgContent: svgContent);
   }
 }
 
